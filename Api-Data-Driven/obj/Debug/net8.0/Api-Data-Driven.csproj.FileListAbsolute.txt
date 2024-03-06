@@ -30,3 +30,4 @@ C:\Users\samue\source\repos\Api-Data-Driven\Api-Data-Driven\obj\Debug\net8.0\ref
 C:\Users\samue\source\repos\Api-Data-Driven\Api-Data-Driven\obj\Debug\net8.0\Api-Data-Driven.pdb
 C:\Users\samue\source\repos\Api-Data-Driven\Api-Data-Driven\obj\Debug\net8.0\Api-Data-Driven.genruntimeconfig.cache
 C:\Users\samue\source\repos\Api-Data-Driven\Api-Data-Driven\obj\Debug\net8.0\ref\Api-Data-Driven.dll
+C:\Users\samue\source\repos\Api-Data-Driven\Api-Data-Driven\obj\Debug\net8.0\Api-Data-Driven.sourcelink.json
