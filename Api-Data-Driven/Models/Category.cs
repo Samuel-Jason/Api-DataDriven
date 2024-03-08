@@ -5,7 +5,6 @@ namespace Api_Data_Driven.Models
 {
     public class Category
     {
-        internal int id;
 
         [Key]
         public int Id { get; set; }

@@ -1,4 +1,5 @@
-﻿using Api_Data_Driven.Models;
+﻿using Api_Data_Driven.Data;
+using Api_Data_Driven.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -23,11 +24,15 @@ namespace Api_Data_Driven.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<Category>> Post([FromBody] Category model)
+        public async Task<ActionResult<List<Category>>> Post(
+            [FromBody] Category model,
+            [FromServices] DataContext context)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
            
+            context.Categories.Add(model);
+            await context.SaveChangesAsync();
             return Ok(model);
         }
 
