@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Api-Data-Driven")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e5e9881b10a3185f4930b90b0c7a30358b351c11")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd65a4052bf1b7abb1f6884d9be7f1725899ffa2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Api-Data-Driven")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Api-Data-Driven")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

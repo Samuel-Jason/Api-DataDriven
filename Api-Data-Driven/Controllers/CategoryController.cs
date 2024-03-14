@@ -1,6 +1,7 @@
 ﻿using Api_Data_Driven.Data;
 using Api_Data_Driven.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace Api_Data_Driven.Controllers
@@ -10,16 +11,21 @@ namespace Api_Data_Driven.Controllers
     {
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<List<Category>>> Get()
+        public async Task<ActionResult<List<Category>>> Get(
+            [FromBody] Category model,
+            [FromServices] DataContext context)
         {
-            return new List<Category>();
+            var categories = await context.Categories.AsNoTracking().ToListAsync();
+            return Ok(categories);
         }
 
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<ActionResult<Category>> GetById(int id)
+        public async Task<ActionResult<Category>> GetById(int id,
+            [FromServices] DataContext context)
         {
-            return new Category();
+            var category = await context.Categories.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return Ok(category);
         }
 
         [HttpPost]
@@ -28,17 +34,27 @@ namespace Api_Data_Driven.Controllers
             [FromBody] Category model,
             [FromServices] DataContext context)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-           
-            context.Categories.Add(model);
-            await context.SaveChangesAsync();
-            return Ok(model);
+
+            try
+            {
+                context.Categories.Add(model);
+                await context.SaveChangesAsync();
+                return Ok(model);
+
+            }
+            catch
+            {
+                return BadRequest(new { message = "Nao foi possivel criar caregoria." });
+            }
         }
 
         [HttpPut]
         [Route("")]
-        public async Task<ActionResult<Category>> Put(int id, [FromBody] Category model)
+        public async Task<ActionResult<Category>> Put(int id,
+            [FromBody] Category model,
+            [FromServices] DataContext context)
         {
             if (id != model.Id)
                 return NotFound(new { message = "Categoria não encontrada" });
@@ -46,14 +62,39 @@ namespace Api_Data_Driven.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            return Ok(model); 
+            try
+            {
+                context.Entry<Category>(model).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+                return Ok(model);
+            }
+            catch
+            {
+                return BadRequest(new { Message = "Nao foi possivel atualizar categoria." });
+            }
+
         }
 
         [HttpDelete]
         [Route("{id:int}")]
-        public async Task<ActionResult<Category>> Delete()
+        public async Task<ActionResult<Category>> Delete(int id,
+            [FromServices] DataContext context)
         {
-            return Ok();
+            var category = await context.Categories.SingleOrDefaultAsync(x => x.Id == id);
+            if (category == null)
+                return NotFound(new { message = "Categoria nao encontrada." });
+
+            try
+            {
+                context.Categories.Remove(category);
+                await context.SaveChangesAsync();
+                return Ok(new { message = "Categoria removida com sucesso" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Nao foi possivel remover a caregoria" });
+            }
+
         }
     }
 }

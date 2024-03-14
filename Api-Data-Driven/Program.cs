@@ -1,5 +1,6 @@
 using Api_Data_Driven.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+builder.Services.AddEntityFrameworkSqlServer().AddDbContext<DataContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("connectionString")));
+//builder.Services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
 builder.Services.AddScoped<DataContext, DataContext>();
 
 var app = builder.Build();
